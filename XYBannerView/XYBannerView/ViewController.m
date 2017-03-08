@@ -8,6 +8,8 @@
 
 #import "ViewController.h"
 
+#import "XYBannerView.h"
+
 @interface ViewController ()<UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -19,16 +21,44 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+//    // 设置图片张数 = 5
+//    int imageCount = 5;
+//    
+//    for (int i = 0;  i < imageCount; i++) {
+//        
+//        // 根据位置index创建图片
+//        NSString *imageName = [NSString stringWithFormat:@"img_0%d",i];
+//        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
+//        imageView.frame = CGRectMake(i * imageView.frame.size.width, 0, imageView.frame.size.width, self.scrollView.frame.size.height);
+//        
+//        // 添加到ScrollView上
+//        [self.scrollView addSubview:imageView];
+//
+//    }
+//    
+//    
+//    // 设置contentSize
+//    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * imageCount, 0);
+//    
+//    // 设置分页
+//    self.scrollView.pagingEnabled = YES;
+//    // 去掉标注线
+//    self.scrollView.showsHorizontalScrollIndicator = NO;
+//    self.scrollView.showsVerticalScrollIndicator = NO;
     
     
-    int imageCount = 5;
     
-    for (int i = 0;  i < imageCount; i++) {
-        
-        
-        
-        
-    }
+    // 1.创建banner
+    XYBannerView *banner = [XYBannerView bannerView];
+    
+    // 2.设置banner相关属性
+    banner.imagesArr = @[@"img_00",@"img_01",@"img_02",@"img_03",@"img_04"];
+    banner.frame = CGRectMake(37.5, 100, 300, 150);
+    
+    
+    // 3.添加到UI上
+    [self.view addSubview:banner];
+    
     
     
 }

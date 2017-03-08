@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="XYBannerView">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="150"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HFS-n4-NTM">
+                    <rect key="frame" x="0.0" y="0.0" width="300" height="150"/>
+                </scrollView>
+                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="CqB-lZ-SlE">
+                    <rect key="frame" x="130" y="113" width="40" height="37"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="37" id="f8j-zZ-oGM"/>
+                    </constraints>
+                </pageControl>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="HFS-n4-NTM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="L3g-DE-Vg1"/>
+                <constraint firstAttribute="trailing" secondItem="CqB-lZ-SlE" secondAttribute="trailing" constant="130" id="MYe-Zl-VV7"/>
+                <constraint firstItem="CqB-lZ-SlE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="130" id="QaF-OD-xqy"/>
+                <constraint firstAttribute="bottom" secondItem="CqB-lZ-SlE" secondAttribute="bottom" id="RMH-GU-ytg"/>
+                <constraint firstAttribute="trailing" secondItem="HFS-n4-NTM" secondAttribute="trailing" id="cj2-rO-VOQ"/>
+                <constraint firstItem="HFS-n4-NTM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="vbK-N6-Vkm"/>
+                <constraint firstAttribute="bottom" secondItem="HFS-n4-NTM" secondAttribute="bottom" id="xSB-Vw-era"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="pageControll" destination="CqB-lZ-SlE" id="urN-P2-Sjg"/>
+                <outlet property="scrollView" destination="HFS-n4-NTM" id="GjO-D6-eL0"/>
+            </connections>
+            <point key="canvasLocation" x="23" y="-151"/>
+        </view>
+    </objects>
+</document>
