@@ -8,7 +8,11 @@
 
 #import "XYBannerView.h"
 
+// 定义图片张数为3
+static int imageViewCount = 3;
+
 @interface XYBannerView ()<UIScrollViewDelegate>
+
 
 // 滚动视图
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -16,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControll;
 
 @property (nonatomic, strong) NSTimer *timer;
+
+
 
 @end
 
@@ -28,33 +34,47 @@
 }
 
 
+// xib 创建
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    
+    
+    for (int i = 0; i < imageViewCount; i++) {
+        UIImageView *imageView = [UIImageView new];
+        imageView.frame = CGRectMake(i * self.scrollView.frame.size.width, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
+        [self.scrollView addSubview:imageView];
+    }
+    
+    self.scrollView.delegate = self;
+    self.scrollView.pagingEnabled = YES;
+    self.scrollView.showsVerticalScrollIndicator = NO;
+    self.scrollView.showsHorizontalScrollIndicator = NO;
+    self.scrollView.contentSize = CGSizeMake(imageViewCount * self.scrollView.frame.size.width, 0);
+    
+    
+    // 关于pageControll的初始设置
+    self.pageControll.currentPageIndicatorTintColor = [UIColor yellowColor];
+    self.pageControll.pageIndicatorTintColor = [UIColor grayColor];
+    
+}
+
+
 #pragma mark - 重写set方法
 - (void)setImagesArr:(NSArray *)imagesArr
 {
     _imagesArr = imagesArr;
-    
-    // 创建对应的imageView添加到scrollView中去
-    for (int i = 0 ; i < imagesArr.count ;i++) {
 
-        // 根据位置index创建图片
-        NSString *imageName = [NSString stringWithFormat:@"img_0%d",i];
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
-        imageView.frame = CGRectMake(i * imageView.frame.size.width, 0, imageView.frame.size.width, self.scrollView.frame.size.height);
+    
 
-        // 添加到ScrollView上
-        [self.scrollView addSubview:imageView];
-    }
-    self.scrollView.delegate = self;
-    self.scrollView.contentSize = CGSizeMake(imagesArr.count * self.scrollView.frame.size.width, 0);
-    self.scrollView.pagingEnabled = YES;
     
     
+    // 设置内容
+    [self setupContent];
     
-    // 关于pageControll的设置
+    // 设置
     self.pageControll.numberOfPages = imagesArr.count;
     self.pageControll.currentPage = 0;
-    self.pageControll.currentPageIndicatorTintColor = [UIColor yellowColor];
-    self.pageControll.pageIndicatorTintColor = [UIColor grayColor];
     
     
     // 设置定时功能
@@ -62,14 +82,75 @@
     
 }
 
+- (void)setupContent
+{
+    // 设置图片，页码（这是一个循环，自己演算一下即可）
+    for (int i = 0; i < self.scrollView.subviews.count; i++) {
+        UIImageView *imageView = self.scrollView.subviews[i];
+        NSInteger index = self.pageControll.currentPage;
+        if (i == 0) {
+            index--;
+        } else if (i == 2) {
+            index++;
+        }
+        if (index < 0) {
+            index = self.pageControll.numberOfPages - 1;
+        } else if (index >= self.pageControll.numberOfPages) {
+            index = 0;
+        }
+        imageView.tag = index;
+        imageView.image = [UIImage imageNamed:self.imagesArr[index]];
+    }
+    
+    
+    // 设置当前偏移量
+    self.scrollView.contentOffset = CGPointMake(self.scrollView.frame.size.width, 0);
+
+}
+
 
 #pragma mark - 代理监听页面滚动
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    // 实时监听当前第几页，根据当前偏移量来
-    self.pageControll.currentPage = (int)(self.scrollView.contentOffset.x / self.scrollView.frame.size.width + 0.5);
     
+    // 找出最中间的那个图片控件
+    NSInteger page = 0;
+    CGFloat minDistance = MAXFLOAT;
+    for (int i = 0; i<self.scrollView.subviews.count; i++) {
+        UIImageView *imageView = self.scrollView.subviews[i];
+        CGFloat distance = 0;
+
+            distance = ABS(imageView.frame.origin.x - scrollView.contentOffset.x);
+        
+        if (distance < minDistance) {
+            minDistance = distance;
+            page = imageView.tag;
+        }
+    }
+    
+    self.pageControll.currentPage = page;
+    
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self endTimer];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [self startTimer];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self setupContent];
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
+{
+    [self setupContent];
 }
 
 
@@ -83,7 +164,9 @@
         
     }];
     
-    [self.timer fire];
+    // 设置timer在运行循环中模式为
+    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+    
 }
 
 - (void)endTimer
@@ -95,19 +178,8 @@
 - (void)nextPage
 {
     
-    NSInteger page = self.pageControll.currentPage + 1;
-    
-    if (page == self.pageControll.numberOfPages) {
-        page = 0;
-    }
-    
-    
-    [UIView animateWithDuration:0.5 animations:^{
-        //每次滚动就是，改变对应偏移量
-        CGPoint offsize = self.scrollView.contentOffset;
-        offsize.x =  page * self.scrollView.frame.size.width;
-        self.scrollView.contentOffset = offsize;
-    }];
+    [self.scrollView setContentOffset:CGPointMake(2 * self.scrollView.frame.size.width, 0) animated:YES];
+
 }
 
 
