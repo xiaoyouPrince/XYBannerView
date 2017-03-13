@@ -49,16 +49,25 @@
     
     
     // 1.创建banner
-    XYBannerView *banner = [XYBannerView bannerView];
+//    XYBannerView *banner = [XYBannerView bannerView];
+    XYBannerView *banner = [[XYBannerView alloc] init];
     
     // 2.设置banner相关属性
     banner.imagesArr = @[@"img_00",@"img_01",@"img_02",@"img_03",@"img_04"];
-    banner.frame = CGRectMake(37.5, 100, 300, 150);
-    
+//    banner.frame = CGRectMake(37.5, 100, 300, 150);
+    banner.frame = CGRectMake(80, 20, 200, 90);
     
     // 3.添加到UI上
     [self.view addSubview:banner];
     
+    
+    
+    // 测试
+//    UIImageView *iv = [UIImageView new];
+//    iv.image = [UIImage imageNamed:nil];
+//    iv.frame = CGRectMake(50, 300, 200, 80);
+//    iv.backgroundColor = [UIColor blueColor];
+//    [self.view addSubview:iv];
     
     
 }

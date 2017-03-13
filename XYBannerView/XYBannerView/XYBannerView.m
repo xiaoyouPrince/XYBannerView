@@ -33,12 +33,44 @@ static int imageViewCount = 3;
     return [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self) owner:nil options:nil] lastObject];
 }
 
+// 代码创建
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    if(self = [super initWithFrame:frame])
+    {
+        
+        // 创建子控件
+        UIScrollView *scrollView = [UIScrollView new];
+        self.scrollView = scrollView;
+        [self addSubview:scrollView];
+        
+        UIPageControl *pageControl = [UIPageControl new];
+        self.pageControll = pageControl;
+        [self addSubview:pageControl];
+        
+        // 基础设置
+        [self setup];
+    }
+    return self;
+}
+
 
 // xib 创建
 - (void)awakeFromNib
 {
     [super awakeFromNib];
     
+    
+    // 基础设置
+    [self setup];
+}
+
+/**
+ *  基础设置
+ */
+- (void)setup
+{
+
     
     for (int i = 0; i < imageViewCount; i++) {
         UIImageView *imageView = [UIImageView new];
@@ -56,9 +88,32 @@ static int imageViewCount = 3;
     // 关于pageControll的初始设置
     self.pageControll.currentPageIndicatorTintColor = [UIColor yellowColor];
     self.pageControll.pageIndicatorTintColor = [UIColor grayColor];
-    
 }
 
+- (void)layoutSubviews
+{
+
+    [super layoutSubviews];
+
+    
+    // 重写scrollView的布局
+    self.scrollView.frame = self.bounds;
+    self.scrollView.contentSize = CGSizeMake(imageViewCount * self.bounds.size.width, 0);
+    for (int i = 0; i<imageViewCount; i++) {
+        UIImageView *imageView = self.scrollView.subviews[i];
+        
+        imageView.frame = CGRectMake(i * self.scrollView.frame.size.width, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
+    }
+    
+    // 重写pageControl的布局
+    CGFloat pageW = 80;
+    CGFloat pageH = 20;
+    CGFloat pageX = self.scrollView.frame.size.width - pageW;
+    CGFloat pageY = self.scrollView.frame.size.height - pageH;
+    self.pageControll.frame = CGRectMake(pageX, pageY, pageW, pageH);
+
+    
+}
 
 #pragma mark - 重写set方法
 - (void)setImagesArr:(NSArray *)imagesArr
@@ -66,15 +121,15 @@ static int imageViewCount = 3;
     _imagesArr = imagesArr;
 
     
-
-    
-    
-    // 设置内容
-    [self setupContent];
     
     // 设置
     self.pageControll.numberOfPages = imagesArr.count;
     self.pageControll.currentPage = 0;
+    
+    // 设置内容
+    [self setupContent];
+    
+    
     
     
     // 设置定时功能
