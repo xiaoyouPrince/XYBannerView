@@ -11,13 +11,15 @@
 // 定义图片张数为3
 static int imageViewCount = 3;
 
-@interface XYBannerView ()<UIScrollViewDelegate>
+@interface XYBannerView ()<UIScrollViewDelegate,XYBannerViewDelegate>
 
 
 // 滚动视图
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 // 页面小圆点
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControll;
+// 标题label
+@property (nonatomic, weak) UILabel *titleLabel;
 
 @property (nonatomic, strong) NSTimer *timer;
 
@@ -76,6 +78,12 @@ static int imageViewCount = 3;
         UIImageView *imageView = [UIImageView new];
         imageView.frame = CGRectMake(i * self.scrollView.frame.size.width, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height);
         [self.scrollView addSubview:imageView];
+        
+        
+        // 每个IV设置点击事件
+        imageView.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickedImageView:)];
+        [imageView addGestureRecognizer:tap];
     }
     
     self.scrollView.delegate = self;
@@ -111,6 +119,10 @@ static int imageViewCount = 3;
     CGFloat pageX = self.scrollView.frame.size.width - pageW;
     CGFloat pageY = self.scrollView.frame.size.height - pageH;
     self.pageControll.frame = CGRectMake(pageX, pageY, pageW, pageH);
+    
+    // 重写titleLabel的布局
+    CGFloat titleH = 50;
+    self.titleLabel.frame = CGRectMake(0, self.frame.size.height - titleH, self.frame.size.width, titleH);
 
     
 }
@@ -137,6 +149,25 @@ static int imageViewCount = 3;
     
 }
 
+// 这里是设置标题
+- (void)setTitlesArr:(NSArray *)titlesArr
+{
+    _titlesArr = titlesArr;
+    
+    // 创建一个标题的Label
+    UILabel *titleLabel = [UILabel new];
+    titleLabel.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
+    [self addSubview:titleLabel];
+    self.titleLabel = titleLabel;
+    
+//    CGFloat titleH = 50;
+//    titleLabel.frame = CGRectMake(0, self.frame.size.height - titleH, self.frame.size.width, titleH);
+    
+    // 设置默认第一个是 第一条
+    titleLabel.text = titlesArr.firstObject;
+}
+
+
 - (void)setupContent
 {
     // 设置图片，页码（这是一个循环，自己演算一下即可）
@@ -155,12 +186,25 @@ static int imageViewCount = 3;
         }
         imageView.tag = index;
         imageView.image = [UIImage imageNamed:self.imagesArr[index]];
+        
+        // 同时设置title（title 和 图片是对应的，但是当前title和当前要展示的image属于错位1个单位的关系,实际上是延迟了一个单位，所以需要重新计算）
+        self.titleLabel.text = self.titlesArr[index];
     }
     
     
     // 设置当前偏移量
     self.scrollView.contentOffset = CGPointMake(self.scrollView.frame.size.width, 0);
-
+    
+    // 重置偏移量之后重新计算对应的title（取出当前页码，减去1即可）
+    NSString *currentTitle = self.titleLabel.text;
+    NSInteger titleIndex = [self.titlesArr indexOfObject:currentTitle];
+    
+    titleIndex --; // 自减一
+    
+    if (titleIndex  < 0) titleIndex = self.titlesArr.count - 1;
+    
+    // 重新设置对应的title
+    self.titleLabel.text = self.titlesArr[titleIndex];
 }
 
 
@@ -236,6 +280,22 @@ static int imageViewCount = 3;
     [self.scrollView setContentOffset:CGPointMake(2 * self.scrollView.frame.size.width, 0) animated:YES];
 
 }
+
+#pragma mark - 自己代理调用
+
+// 点击了自己图片index
+- (void)clickedImageView:(UITapGestureRecognizer *)tap
+{
+    UIImageView *imageView = (UIImageView *)tap.view;
+    
+    if ([self.delegate respondsToSelector:@selector(bannerView:didClickImageAtIndex:)]) {
+        
+        [self.delegate bannerView:self didClickImageAtIndex:imageView.tag];
+    }
+}
+
+
+
 
 
 @end

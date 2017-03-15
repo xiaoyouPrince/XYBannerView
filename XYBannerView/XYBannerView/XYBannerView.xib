@@ -30,8 +30,8 @@
                 <constraint firstItem="HFS-n4-NTM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="L3g-DE-Vg1"/>
                 <constraint firstAttribute="trailing" secondItem="CqB-lZ-SlE" secondAttribute="trailing" constant="130" id="MYe-Zl-VV7"/>
                 <constraint firstItem="CqB-lZ-SlE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="130" id="QaF-OD-xqy"/>
+                <constraint firstAttribute="trailing" secondItem="HFS-n4-NTM" secondAttribute="trailing" id="Qxg-5J-irM"/>
                 <constraint firstAttribute="bottom" secondItem="CqB-lZ-SlE" secondAttribute="bottom" id="RMH-GU-ytg"/>
-                <constraint firstAttribute="trailing" secondItem="HFS-n4-NTM" secondAttribute="trailing" id="cj2-rO-VOQ"/>
                 <constraint firstItem="HFS-n4-NTM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="vbK-N6-Vkm"/>
                 <constraint firstAttribute="bottom" secondItem="HFS-n4-NTM" secondAttribute="bottom" id="xSB-Vw-era"/>
             </constraints>
@@ -41,7 +41,7 @@
                 <outlet property="pageControll" destination="CqB-lZ-SlE" id="urN-P2-Sjg"/>
                 <outlet property="scrollView" destination="HFS-n4-NTM" id="GjO-D6-eL0"/>
             </connections>
-            <point key="canvasLocation" x="23" y="-151"/>
+            <point key="canvasLocation" x="348" y="-149"/>
         </view>
     </objects>
 </document>
