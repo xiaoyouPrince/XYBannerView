@@ -48,7 +48,11 @@
     
 }
 
-
+/**
+ *  返回Banner和对应的点击页码
+ *  @parama banner  返回的Banner对象
+ *  @parama index   点击的页码
+ */
 - (void)bannerView:(XYBannerView *)banner didClickImageAtIndex:(NSInteger)index
 {
     NSLog(@"index == %ld",index);

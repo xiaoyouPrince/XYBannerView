@@ -238,6 +238,7 @@
 				TargetAttributes = {
 					B4908CDC1E6FA1DD006272C9 = {
 						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = J9CJUEB6H8;
 						ProvisioningStyle = Automatic;
 					};
 					B4908CF51E6FA1DD006272C9 = {
@@ -462,7 +463,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = J9CJUEB6H8;
 				INFOPLIST_FILE = XYBannerView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.pb.XYBannerView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -473,7 +476,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = J9CJUEB6H8;
 				INFOPLIST_FILE = XYBannerView/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.pb.XYBannerView;
 				PRODUCT_NAME = "$(TARGET_NAME)";

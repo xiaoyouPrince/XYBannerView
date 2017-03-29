@@ -14,13 +14,13 @@ static int imageViewCount = 3;
 @interface XYBannerView ()<UIScrollViewDelegate,XYBannerViewDelegate>
 
 
-// 滚动视图
+/** 滚动视图 */
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-// 页面小圆点
+/** 页面小圆点 */
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControll;
-// 标题label
+/** 标题label */
 @property (nonatomic, weak) UILabel *titleLabel;
-
+/** 定时器 */
 @property (nonatomic, strong) NSTimer *timer;
 
 
@@ -29,13 +29,13 @@ static int imageViewCount = 3;
 
 @implementation XYBannerView
 
-// 放回实例对象
+/** 放回实例对象 */
 + (instancetype)bannerView
 {
     return [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass(self) owner:nil options:nil] lastObject];
 }
 
-// 代码创建
+/** 代码创建 */
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if(self = [super initWithFrame:frame])
@@ -57,7 +57,7 @@ static int imageViewCount = 3;
 }
 
 
-// xib 创建
+/** xib 创建 */
 - (void)awakeFromNib
 {
     [super awakeFromNib];
@@ -98,6 +98,9 @@ static int imageViewCount = 3;
     self.pageControll.pageIndicatorTintColor = [UIColor grayColor];
 }
 
+/**
+ *  重置frame
+ */
 - (void)layoutSubviews
 {
 
@@ -128,6 +131,9 @@ static int imageViewCount = 3;
 }
 
 #pragma mark - 重写set方法
+/**
+ *  设置images
+ */
 - (void)setImagesArr:(NSArray *)imagesArr
 {
     _imagesArr = imagesArr;
@@ -149,7 +155,7 @@ static int imageViewCount = 3;
     
 }
 
-// 这里是设置标题
+/** 这里是设置标题 */
 - (void)setTitlesArr:(NSArray *)titlesArr
 {
     _titlesArr = titlesArr;
@@ -167,7 +173,7 @@ static int imageViewCount = 3;
     titleLabel.text = titlesArr.firstObject;
 }
 
-
+/** 这里是设置内容 */
 - (void)setupContent
 {
     // 设置图片，页码（这是一个循环，自己演算一下即可）
@@ -210,6 +216,11 @@ static int imageViewCount = 3;
 
 #pragma mark - 代理监听页面滚动
 
+/**
+ scrollView滚动
+
+ @param scrollView 对象
+ */
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     
@@ -237,16 +248,32 @@ static int imageViewCount = 3;
     [self endTimer];
 }
 
+/**
+ 用户拖动结束
+
+ @param scrollView scrollView对象
+ @param decelerate 是否完成
+ */
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     [self startTimer];
 }
 
+/**
+ 滑动结束
+
+ @param scrollView scrollView对象
+ */
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     [self setupContent];
 }
 
+/**
+ 滚动完成
+
+ @param scrollView 对象
+ */
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
     [self setupContent];
@@ -255,6 +282,9 @@ static int imageViewCount = 3;
 
 #pragma mark - 定时器
 
+/**
+ 开始定时器
+ */
 - (void)startTimer
 {
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.5 repeats:YES block:^(NSTimer * _Nonnull timer) {
@@ -268,12 +298,18 @@ static int imageViewCount = 3;
     
 }
 
+/**
+ 结束定时器
+ */
 - (void)endTimer
 {
     [self.timer invalidate];
     self.timer = nil;
 }
 
+/**
+ 下一页
+ */
 - (void)nextPage
 {
     
@@ -283,7 +319,12 @@ static int imageViewCount = 3;
 
 #pragma mark - 自己代理调用
 
-// 点击了自己图片index
+
+/**
+ 点击了自己图片index
+
+ @param tap 点击事件
+ */
 - (void)clickedImageView:(UITapGestureRecognizer *)tap
 {
     UIImageView *imageView = (UIImageView *)tap.view;
