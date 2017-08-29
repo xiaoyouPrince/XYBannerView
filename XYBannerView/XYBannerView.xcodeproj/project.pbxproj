@@ -42,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B41B23BF1E9DF9DC002F5329 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		B4908CDD1E6FA1DD006272C9 /* XYBannerView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XYBannerView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4908CE11E6FA1DD006272C9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B4908CE31E6FA1DD006272C9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -124,11 +125,8 @@
 				B4908D261E6FB7F3006272C9 /* XYBannerView.h */,
 				B4908D271E6FB7F3006272C9 /* XYBannerView.m */,
 				B4908D291E6FB7FA006272C9 /* XYBannerView.xib */,
-				B4908CE91E6FA1DD006272C9 /* Main.storyboard */,
-				B4908CEC1E6FA1DD006272C9 /* Assets.xcassets */,
-				B4908CEE1E6FA1DD006272C9 /* LaunchScreen.storyboard */,
-				B4908CF11E6FA1DD006272C9 /* Info.plist */,
 				B4908CE01E6FA1DD006272C9 /* Supporting Files */,
+				B41B23BF1E9DF9DC002F5329 /* PrefixHeader.pch */,
 			);
 			path = XYBannerView;
 			sourceTree = "<group>";
@@ -136,6 +134,10 @@
 		B4908CE01E6FA1DD006272C9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B4908CE91E6FA1DD006272C9 /* Main.storyboard */,
+				B4908CEC1E6FA1DD006272C9 /* Assets.xcassets */,
+				B4908CEE1E6FA1DD006272C9 /* LaunchScreen.storyboard */,
+				B4908CF11E6FA1DD006272C9 /* Info.plist */,
 				B4908CE11E6FA1DD006272C9 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -464,6 +466,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = J9CJUEB6H8;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = XYBannerView/PrefixHeader.pch;
 				INFOPLIST_FILE = XYBannerView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -477,6 +481,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = J9CJUEB6H8;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = XYBannerView/PrefixHeader.pch;
 				INFOPLIST_FILE = XYBannerView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

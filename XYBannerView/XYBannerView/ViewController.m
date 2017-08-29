@@ -21,8 +21,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-
-    
     
     
     // 1.创建banner
